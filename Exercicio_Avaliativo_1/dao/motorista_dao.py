@@ -24,7 +24,7 @@ class MotoristaDao:
             res = self.db.collection.find_one({
                 "_id": ObjectId(id)
             })
-            print(f"motorista found: {res}")
+            print(f"motorista found:")
             return res
         except Exception as e:
             print(f"An error occurred while reading motorista: {e}")
@@ -39,7 +39,7 @@ class MotoristaDao:
                 {
                     "$set": {
                         "nota": nota,
-                        "corridas": corridas
+                        "corridas": [corrida.to_dict() for corrida in corridas]
                     }
                 }
             )

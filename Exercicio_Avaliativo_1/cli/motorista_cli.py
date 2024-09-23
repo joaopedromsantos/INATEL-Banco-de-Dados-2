@@ -51,7 +51,7 @@ class MotoristaCLI(SimpleCLI):
             corridas.append(corrida)
 
             print("Deseja adicionar mais um passageiro e uma corrida?")
-            response = input("Resposta: S/N")
+            response = input("Resposta: S/N\n")
             if response.lower() == "n":
                 break
 
@@ -65,18 +65,47 @@ class MotoristaCLI(SimpleCLI):
         id = input("Enter the id: ")
         motorista = self.motorista_model.read_motorista_by_id(id)
         if motorista:
-            print(f"Title: {motorista.get('titulo')}")
-            print(f"Author: {motorista.get('autor')}")
-            print(f"Year: {motorista.get('ano')}")
-            print(f"Price: {motorista.get('preco')}")
+            print(f"Nota: {motorista.get('nota')}")
+            print("------")
+            for index, corrida in enumerate(motorista.get('corridas')):
+                print(f"Corrida {index}: ")
+                print(f"-- Nota: {corrida.get('nota')}")
+                print(f"-- Distância: {corrida.get('distancia')}")
+                print(f"-- Valor: {corrida.get('valor')}")
+                print(f"-- -- Passageiro:")
+                print(f"Nome: {corrida.get('passageiro').get('nome')}")
+                print(f"Documento: {corrida.get('passageiro').get('documento')}")
+                print("------")
 
     def update_motorista(self):
         id = input("Enter the id: ")
-        titulo = input("Enter the new title: ")
-        autor = input("Enter the new author: ")
-        ano = int(input("Enter the new year: "))
-        preco = float(input("Enter the new price: "))
-        self.motorista_model.update_motorista(id, titulo, autor, ano, preco)
+        corridas = []
+
+        while True:
+            print("Apresente informações de um passageiro e sobre a corrida")
+            print("\n------PASSAGEIRO------")
+            nome = input("Nome: ")
+            documento = input("Documento: ")
+            passageiro = Passageiro(nome, documento).to_dict()
+
+            print("\n------CORRIDA------")
+            nota = int(input("Nota: "))
+            distancia = float(input("Distância: "))
+            valor = float(input("Valor: "))
+            corrida = Corrida(nota=nota, distancia=distancia, valor=valor, passageiro=passageiro)
+
+            # Adicionando a corrida na lista
+            corridas.append(corrida)
+
+            print("Deseja adicionar mais um passageiro e uma corrida?")
+            response = input("Resposta: S/N\n")
+            if response.lower() == "n":
+                break
+
+        print("Apresente informações do motorista")
+        print("\n------MOTORISTA------")
+        nota = int(input("Nota: "))
+        self.motorista_model.update_motorista(id=id, nota=nota, corridas=corridas)
 
     def delete_motorista(self):
         id = input("Enter the id: ")
