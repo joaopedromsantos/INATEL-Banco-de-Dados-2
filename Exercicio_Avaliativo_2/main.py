@@ -3,7 +3,7 @@ from database import Database
 from query import Query
 
 db = Database("bolt://44.197.169.135:7687", "neo4j", "stores-receipt-sonars")
-db.drop_all()
+# db.drop_all()
 
 querys = Query(db)
 teacher_crud = TeacherCRUD(db)
@@ -23,5 +23,5 @@ print(querys.get_teacher_names_starting_from_third_letter())
 
 # Questão 3
 teacher_crud.create("Chris Lima", 1956, "189.052.396-66")
-teacher_crud.read("Chris Lima")
+print(teacher_crud.read("Chris Lima"))
 teacher_crud.update("Chris Lima", "162.052.777-77")

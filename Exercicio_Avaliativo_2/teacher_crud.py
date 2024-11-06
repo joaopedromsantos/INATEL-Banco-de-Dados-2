@@ -8,7 +8,6 @@ class TeacherCRUD:
         """
         parameters = {"name": name, "ano_nasc": ano_nasc, "cpf": cpf}
         self.db.execute_query(query, parameters)
-        return f"Teacher '{name}' criado com sucesso."
 
     def read(self, name):
         query = """
@@ -17,7 +16,7 @@ class TeacherCRUD:
         """
         parameters = {"name": name}
         results = self.db.execute_query(query, parameters)
-        return results[0] if results else None
+        return [{"Name": results[0]["name"],"Year of birth": results[0]["ano_nasc"], "CPF": results[0]["cpf"]}]
 
     def update(self, name, newCpf):
         query = """
@@ -27,7 +26,6 @@ class TeacherCRUD:
         """
         parameters = {"name": name, "newCpf": newCpf}
         self.db.execute_query(query, parameters)
-        return f"CPF do Teacher '{name}' atualizado para {newCpf}."
 
     def delete(self, name):
         query = """
@@ -36,4 +34,3 @@ class TeacherCRUD:
         """
         parameters = {"name": name}
         self.db.execute_query(query, parameters)
-        return f"Teacher '{name}' deletado com sucesso."

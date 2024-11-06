@@ -5,17 +5,17 @@ class Query:
     def get_name_renato(self):
         query = "MATCH (t:Teacher {name: 'Renzo'}) RETURN t.ano_nasc AS year, t.cpf AS cpf"
         results = self.db.execute_query(query)
-        return [{"Ano de Nascimento": results[0]["year"], "CPF": results[0]["cpf"]}]
+        return [{"Year of birth": results[0]["year"], "CPF": results[0]["cpf"]}]
 
     def get_teachers_starting_with_m(self):
         query = "MATCH (t:Teacher) WHERE t.name STARTS WITH 'M' RETURN t.name AS name, t.cpf AS cpf"
         results = self.db.execute_query(query)
-        return [{"Nome": record["name"], "CPF": record["cpf"]} for record in results]
+        return [{"Name": record["name"], "CPF": record["cpf"]} for record in results]
 
     def get_all_city_names(self):
         query = "MATCH (c:City) RETURN c.name AS city_name"
         results = self.db.execute_query(query)
-        return [{"Cidade": record["city_name"]} for record in results]
+        return [{"City": record["city_name"]} for record in results]
 
     def get_schools_in_number_range(self):
         query = """
@@ -24,7 +24,7 @@ class Query:
         RETURN s.name AS school_name, s.address AS address, s.number AS number
         """
         results = self.db.execute_query(query)
-        return [{"Escola": record["school_name"], "Endereço": record["address"], "Número": record["number"]} for record in results]
+        return [{"School": record["school_name"], "Address": record["address"], "Number": record["number"]} for record in results]
 
     def get_youngest_and_oldest_teacher_year(self):
         query = """
